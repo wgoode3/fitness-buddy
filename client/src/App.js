@@ -1,33 +1,31 @@
 import React from 'react';
-import 'bulma/css/bulma.min.css';
-import { Router, Link } from '@reach/router';
+import { Router } from '@reach/router';
 import Nav from './components/Nav';
 import NewActivity from './components/NewActivity';
 import EditActivity from './components/EditActivity';
 import Home from './components/Home';
+import SignInView from './components/SignInView';
+
 
 function App() {
   return (
-    <div className="container">
+    <>
+      <Nav />
       <section className="hero is-dark">
         <div className="hero-body">
           <div className="container">
-            <h1 className="title">
-              Fitness Buddy
-            </h1>
-            <h2 className="subtitle">
-              ...
-            </h2>
+            <h1 className="title">Fitness Buddy</h1>
+            {/* <h2 className="subtitle">...</h2> */}
           </div>
         </div>
       </section>
-      <Nav />
-      <Router>
+      <Router className="container" style={{marginTop: "50px"}}>
         <Home path="/" />
         <NewActivity path="/new" />
         <EditActivity path="/edit/:_id" />
+        <SignInView path="/sign_in" />
       </Router>
-    </div>
+    </>
   );
 }
 

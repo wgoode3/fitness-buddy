@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Router, Link } from '@reach/router';
+import { Link, navigate } from '@reach/router';
 import axios from 'axios';
 import moment from 'moment';
 
@@ -9,9 +9,17 @@ const Home = props => {
   const [activities, setActivities] = useState([]);
 
   const fetchActivities = () => {
-    axios.get("http://localhost:8000/api/activities")
+    axios.get("http://localhost:8000/api/activities", {
+      withCredentials: true
+    })
       .then( res => setActivities(res.data) )
-      .catch( err => console.log(err) );
+      .catch( err => {
+        if(!err.response.data.verified) {
+          navigate("/sign_in");
+        } else {
+          console.log(err);
+        }
+      });
   }
 
   useEffect( () => {
@@ -23,7 +31,9 @@ const Home = props => {
   }
 
   const remove =_id => {
-    axios.delete(`http://localhost:8000/api/activities/${_id}`)
+    axios.delete(`http://localhost:8000/api/activities/${_id}`, {
+      withCredentials: true
+    })
       .then( res => {
         fetchActivities();
       }).catch( err => console.log(err) );
@@ -37,7 +47,7 @@ const Home = props => {
           activities
             .filter( a => isPast(a.date) )
             .map( a => 
-              <article className="message is-primary" key={a._id}>
+              <article className="message is-info" key={a._id}>
                 <div className="message-header">
                   <p>{a.type}</p>
                   <span>
@@ -60,7 +70,7 @@ const Home = props => {
           activities
             .filter( a => !isPast(a.date) )
             .map( a => 
-              <article className="message is-danger" key={a._id}>
+              <article className="message is-primary" key={a._id}>
                 <div className="message-header">
                   <p>{a.type}</p>
                   <span>

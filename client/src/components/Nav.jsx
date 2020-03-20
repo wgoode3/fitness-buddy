@@ -1,5 +1,5 @@
 import React from 'react';
-import { Router, Link } from '@reach/router';
+import { Link } from '@reach/router';
 
 
 const Nav = props => {
@@ -30,9 +30,7 @@ const Nav = props => {
           <div className="navbar-item">
             <div className="field is-grouped">
               <p className="control">
-                <a className="button is-primary" href="#">
-                  <span>Download</span>
-                </a>
+                <Link className="button is-info" to="/sign_in">Sign In</Link>
               </p>
             </div>
           </div>
